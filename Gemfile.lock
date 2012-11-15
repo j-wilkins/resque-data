@@ -10,6 +10,8 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.3.1)
     rack (1.4.1)
+    rack-cors (0.2.7)
+      rack
     rack-protection (1.2.0)
       rack
     redis (3.0.2)
@@ -29,5 +31,6 @@ PLATFORMS
 DEPENDENCIES
   interactive_editor
   pry
+  rack-cors
   redis-namespace
   sinatra

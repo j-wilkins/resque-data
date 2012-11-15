@@ -2,6 +2,7 @@
 source "https://rubygems.org"
 
 gem "sinatra"
+gem 'rack-cors'
 gem "redis-namespace"
 
 group :development do
