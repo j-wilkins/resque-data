@@ -19,7 +19,7 @@ class ResqueFetcher
   end
 
   def queue_counts
-    Hash[redis.smembers(:queues).map {|q| [q, redis.llen(q)]}]
+    {queues: redis.smembers(:queues).map {|q| {queue: q, count: redis.llen("queue:#{q}")}}}
   end
 
   def failed_count
