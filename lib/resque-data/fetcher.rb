@@ -1,6 +1,10 @@
-class ResqueFetcher
+
+class Resque::Data::Fetcher
 
   def initialize(params)
+    @multi_namespace = params.delete(:multi_namespace)
+    @multi_namespace = true if @multi_namespace.nil?
+
     (params[:redis] || 'redis://localhost:6379').tap do |r|
       @connection, @default_namespace = parse_redis(r)
     end
@@ -13,13 +17,17 @@ class ResqueFetcher
   end
 
   def fetch_for(ns)
+    ns = @default_namespace unless @multi_namespace
+
     using_namespace(ns) do
       queue_counts.merge(failed_count).merge(worker_counts)
     end
   end
 
   def queue_counts
-    {queues: redis.smembers(:queues).map {|q| {queue: q, count: redis.llen("queue:#{q}")}}}
+    {queues: redis.smembers(:queues).map {|q|
+      {queue: q, count: redis.llen("queue:#{q}")}
+    }}
   end
 
   def failed_count
