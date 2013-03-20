@@ -1,21 +1,21 @@
 require 'sinatra'
 require 'json'
-require 'redis/namespace'
+require 'resque'
+#require 'redis/namespace'
+require 'resque-data/redis_helpers'
+require 'resque-data/views'
 
 module Resque
   module Data
     class Server < Sinatra::Application
 
-      configure do
-        $redis ||= RedisManager.new(Resque::Data::Config.default_redis,
-                                  Resque::Data::Config.multi_namespace,
-                                  Resque::Data::Config.multi_redis)
-      end
-
       before do
         content_type 'application/json'
-
       end
+
+      helpers Resque::Data::RedisHelpers
+
+      include RedisHelpers
 
       get '/' do
         begin

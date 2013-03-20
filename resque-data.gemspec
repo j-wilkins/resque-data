@@ -19,6 +19,10 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "sinatra"
   gem.add_dependency "rack-cors"
-  gem.add_dependency "redis-namespace"
+  gem.add_dependency "resque"
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'guard'
+  gem.add_development_dependency 'guard-shell'
+  gem.add_development_dependency 'rb-fsevent'
 
 end
